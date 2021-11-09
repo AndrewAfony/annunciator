@@ -5,8 +5,10 @@
       <map>
         <entry key="..\:/Users/79527/AndroidStudioProjects/Annunciator/app/src/main/res/drawable/round_button.xml" value="0.2898148148148148" />
         <entry key="..\:/Users/79527/AndroidStudioProjects/Annunciator/app/src/main/res/layout/activity_main.xml" value="0.28958333333333336" />
+        <entry key="..\:/Users/79527/AndroidStudioProjects/Annunciator/app/src/main/res/layout/crime_list_fragment.xml" value="0.30364583333333334" />
         <entry key="..\:/Users/79527/AndroidStudioProjects/Annunciator/app/src/main/res/layout/fragment_blank.xml" value="0.30364583333333334" />
         <entry key="..\:/Users/79527/AndroidStudioProjects/Annunciator/app/src/main/res/layout/fragment_crime.xml" value="0.22" />
+        <entry key="..\:/Users/79527/AndroidStudioProjects/Annunciator/app/src/main/res/layout/list_item_crime.xml" value="0.30364583333333334" />
       </map>
     </option>
   </component>

@@ -2,8 +2,8 @@ package com.example.annunciator
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import com.example.annunciator.databinding.ActivityMainBinding
+import com.example.annunciator.fragments.CrimeListFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -16,7 +16,7 @@ class MainActivity : AppCompatActivity() {
 
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                .add(R.id.fragment_container_view, CrimeFragment())
+                .add(R.id.fragment_container_view, CrimeListFragment.newInstance())
                 .commit()
         }
 
