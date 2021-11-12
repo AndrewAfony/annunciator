@@ -1,12 +1,14 @@
 package com.example.annunciator
 
-import java.text.SimpleDateFormat
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import java.util.*
 
+@Entity
 data class Crime(
-    val id: UUID = UUID.randomUUID(),
+    @PrimaryKey val id: UUID = UUID.randomUUID(),
     var title: String = "",
-    var date: SimpleDateFormat = SimpleDateFormat("dd.M.yyyy hh:mm:ss"),
+    var date: Date = Date(),
     var isSolved: Boolean = false,
-    var requiresPolicy: Boolean = false
+//    var requiresPolicy: Boolean = false
 )

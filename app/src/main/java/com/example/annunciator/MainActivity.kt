@@ -14,11 +14,10 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        if (savedInstanceState == null) {
-            supportFragmentManager.beginTransaction()
-                .add(R.id.fragment_container_view, CrimeListFragment.newInstance())
-                .commit()
-        }
+//        TODO ("Упражнение глава 12. Эффективный RecyclerView")
 
     }
 }
+
+// TODO (Упражнение глава 9. Разные типы преступления)
+
