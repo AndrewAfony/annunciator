@@ -4,10 +4,8 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
@@ -15,10 +13,12 @@ import androidx.navigation.fragment.navArgs
 import com.example.annunciator.Crime
 import com.example.annunciator.R
 import com.example.annunciator.databinding.FragmentCrimeBinding
+import java.text.DateFormat
 import java.util.*
 
 private const val TAG = "CrimeFragment"
 private const val DIALOG_DATE = "DialogDate"
+private const val REQUEST_DATE = "requestKey"
 
 class CrimeFragment : Fragment() {
 
@@ -35,6 +35,8 @@ class CrimeFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        setHasOptionsMenu(true)
 
         crime = Crime()
 
@@ -89,9 +91,35 @@ class CrimeFragment : Fragment() {
         }
 
         binding.button.setOnClickListener {
-            val newCalendar = DataPickerFragment()
-            newCalendar.show(parentFragmentManager, DIALOG_DATE)
+
+            val newCalendar = DatePickerFragment.newInstance(crime.date, REQUEST_DATE)
+            newCalendar.show(childFragmentManager, DIALOG_DATE)
+            childFragmentManager.setFragmentResultListener(REQUEST_DATE, viewLifecycleOwner) { key, bundle ->
+
+                val result = bundle.getSerializable("bundleKey")
+
+                this.crime.date = result as Date
+                updateUI()
+            }
+
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.fragment_crime, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when(item.itemId) {
+            R.id.delete_crime -> {
+                viewModel.deleteCrime(crime)
+                view?.findNavController()?.navigate(R.id.action_returnToList)
+                true
+            }
+            else -> return super.onOptionsItemSelected(item)
+        }
+
     }
 
     override fun onStop() {
@@ -106,7 +134,7 @@ class CrimeFragment : Fragment() {
 
     private fun updateUI() {
         binding.titleCrime.text = crime.title
-        binding.button.text = crime.date.toString()
+        binding.button.text = DateFormat.getDateInstance().format(crime.date)
         binding.crimeSolved.apply {
             isChecked = crime.isSolved
             jumpDrawablesToCurrentState()

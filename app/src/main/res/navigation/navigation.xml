@@ -22,5 +22,16 @@
         <argument
             android:name="crimeID"
             app:argType="string" />
+        <action
+            android:id="@+id/action_crimeFragment_to_datePickerFragment"
+            app:destination="@id/datePickerFragment" />
+        <action
+            android:id="@+id/action_returnToList"
+            app:destination="@id/crimeListFragment" />
     </fragment>
+    <dialog
+        android:id="@+id/datePickerFragment"
+        android:name="com.example.annunciator.fragments.DatePickerFragment"
+        android:label="fragment_data_picker"
+        tools:layout="@layout/fragment_data_picker" />
 </navigation>

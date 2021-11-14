@@ -24,10 +24,13 @@ class CrimeRepository private constructor(context: Context) {
     fun getCrimes(): LiveData<List<Crime>> = crimeDao.getCrimes()
     fun getCrime(id: UUID): LiveData<Crime?> = crimeDao.getCrime(id)
     fun updateCrime(crime: Crime) {
-        executor.execute{ crimeDao.updateCrime(crime) }
+        executor.execute { crimeDao.updateCrime(crime) }
     }
     fun addCrime(crime: Crime) {
         executor.execute { crimeDao.addCrime(crime) }
+    }
+    fun deleteCrime(crime: Crime){
+        executor.execute { crimeDao.deleteCrime(crime)}
     }
 
     companion object {
