@@ -4,15 +4,14 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.os.Bundle
 import android.view.*
+import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.ListAdapter
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.*
 import com.example.annunciator.Crime
 import com.example.annunciator.R
 import com.example.annunciator.databinding.CrimeListFragmentBinding
@@ -21,10 +20,6 @@ import java.text.DateFormat
 private const val TAG = "CrimeListFragment"
 
 class CrimeListFragment : Fragment() {
-
-    companion object {
-        fun newInstance() = CrimeListFragment()
-    }
 
     private var _binding: CrimeListFragmentBinding? = null
     private val binding get() = _binding!!
@@ -46,10 +41,24 @@ class CrimeListFragment : Fragment() {
     ): View {
         _binding = CrimeListFragmentBinding.inflate(inflater, container, false)
 
-        binding.buttonAddCrime.setOnClickListener { addNewCrime() }
-
         binding.crimeRecyclerView.layoutManager = LinearLayoutManager(context)
         binding.crimeRecyclerView.adapter = adapter
+
+        val swipeGesture = object : SwipeGesture(requireContext()) {
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+
+                when(direction) {
+                    ItemTouchHelper.LEFT -> {
+                        adapter?.deleteItem(viewHolder.adapterPosition)
+                    }
+                    else -> return
+                }
+
+            }
+        }
+
+        val touchHelper = ItemTouchHelper(swipeGesture)
+        touchHelper.attachToRecyclerView(binding.crimeRecyclerView)
 
         return binding.root
     }
@@ -59,6 +68,7 @@ class CrimeListFragment : Fragment() {
         viewModel.crimesListLiveData.observe(viewLifecycleOwner) { crimes ->
                 crimes?.let { updateUI(crimes) }
             }
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -89,17 +99,10 @@ class CrimeListFragment : Fragment() {
 
         private val titleTextView: TextView = itemView.findViewById(R.id.crime_title)
         private val dateTextView: TextView = itemView.findViewById(R.id.crime_date)
-//        private val buttonRequiresPolicy: Button? = itemView.findViewById(R.id.buttonRequiresPolicy)
-        private val solvedImageView: ImageView = itemView.findViewById(R.id.handcuffs)
+        private val solvedImageView: ImageView = itemView.findViewById(R.id.isDoneMark)
 
         init {
             itemView.setOnClickListener(this)
-
-//            buttonRequiresPolicy?.let {
-//                it.setOnClickListener {
-//                    Toast.makeText(context, "Policy is coming", Toast.LENGTH_LONG).show()
-//                }
-//            }
         }
 
         fun bind(crime: Crime) {
@@ -118,12 +121,6 @@ class CrimeListFragment : Fragment() {
                 else -> solvedImageView.visibility = View.GONE
             }
 
-//            buttonRequiresPolicy?.let {
-//                it.visibility = when(crime.isSolved) {
-//                    true -> View.GONE
-//                    else -> View.VISIBLE
-//                }
-//            }
         }
 
         override fun onClick(v: View?) {
@@ -139,10 +136,6 @@ class CrimeListFragment : Fragment() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CrimeHolder {
 
-//            val view = when (viewType) {
-//                0 -> layoutInflater.inflate(R.layout.list_item_crime, parent, false)
-//                else -> layoutInflater.inflate(R.layout.list_item_crime_serious, parent, false)
-//            }
             val view = layoutInflater.inflate(R.layout.list_item_crime, parent, false)
 
             return CrimeHolder(view)
@@ -152,12 +145,9 @@ class CrimeListFragment : Fragment() {
             holder.bind(getItem(position))
         }
 
-//        override fun getItemViewType(position: Int): Int {
-//            return if(!crimes[position].requiresPolicy) 0
-//            else 1
-//        }
-
-
+        fun deleteItem(position: Int) {
+            viewModel.deleteCrime(getItem(position))
+        }
 
     }
 
@@ -166,7 +156,7 @@ class CrimeListFragment : Fragment() {
     }
 
     private fun addNewCrime() {
-        val crime = Crime(title = "New crime")
+        val crime = Crime(title = "Title")
         viewModel.addCrime(crime)
     }
 
@@ -178,6 +168,5 @@ class CrimeListFragment : Fragment() {
         override fun areContentsTheSame(oldItem: Crime, newItem: Crime): Boolean {
             return oldItem == newItem
         }
-
     }
 }

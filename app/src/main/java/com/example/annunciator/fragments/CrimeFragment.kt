@@ -36,8 +36,6 @@ class CrimeFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setHasOptionsMenu(true)
-
         crime = Crime()
 
         val crimeID: UUID = UUID.fromString(arguments.crimeID)
@@ -103,23 +101,6 @@ class CrimeFragment : Fragment() {
             }
 
         }
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.fragment_crime, menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when(item.itemId) {
-            R.id.delete_crime -> {
-                viewModel.deleteCrime(crime)
-                view?.findNavController()?.navigate(R.id.action_returnToList)
-                true
-            }
-            else -> return super.onOptionsItemSelected(item)
-        }
-
     }
 
     override fun onStop() {
