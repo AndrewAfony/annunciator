@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.room.Room
 import com.example.annunciator.database.CrimeDatabase
 import com.example.annunciator.database.migration_1_2
+import java.io.File
 import java.lang.IllegalStateException
 import java.util.*
 import java.util.concurrent.Executors
@@ -34,6 +35,12 @@ class CrimeRepository private constructor(context: Context) {
     fun deleteCrime(crime: Crime){
         executor.execute { crimeDao.deleteCrime(crime)}
     }
+
+    // Photos
+    private val filesDir = context.applicationContext.filesDir
+
+    fun getPhotoFile(crime: Crime): File = File(filesDir, crime.photoFileName)
+
 
     companion object {
         private var INSTANCE: CrimeRepository? = null

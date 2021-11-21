@@ -4,18 +4,17 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.os.Bundle
 import android.view.*
-import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.*
+import androidx.fragment.app.viewModels
 import com.example.annunciator.Crime
 import com.example.annunciator.R
 import com.example.annunciator.databinding.CrimeListFragmentBinding
 import java.text.DateFormat
+import java.util.*
 
 private const val TAG = "CrimeListFragment"
 
@@ -24,9 +23,11 @@ class CrimeListFragment : Fragment() {
     private var _binding: CrimeListFragmentBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: CrimeListViewModel by lazy {
-        ViewModelProvider(this).get(CrimeListViewModel::class.java)
-    }
+//    private val viewModel: CrimeListViewModel by lazy {
+//        ViewModelProvider(this).get(CrimeListViewModel::class.java)
+//    }
+
+    private val viewModel: CrimeListViewModel by viewModels()
 
     private var adapter: CrimeAdapter? = CrimeAdapter()
 
@@ -45,6 +46,20 @@ class CrimeListFragment : Fragment() {
         binding.crimeRecyclerView.adapter = adapter
 
         val swipeGesture = object : SwipeGesture(requireContext()) {
+
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                val startPosition = viewHolder.adapterPosition
+                val endPosition = target.adapterPosition
+
+//                TODO ("Задать вопрос на StackOverFlow")
+
+                return true
+            }
+
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
 
                 when(direction) {
@@ -53,7 +68,6 @@ class CrimeListFragment : Fragment() {
                     }
                     else -> return
                 }
-
             }
         }
 
