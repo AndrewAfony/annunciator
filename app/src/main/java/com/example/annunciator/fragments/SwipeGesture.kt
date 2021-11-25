@@ -9,10 +9,12 @@ import com.example.annunciator.R
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 import java.util.*
 
-abstract class SwipeGesture(context: Context): ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP.or(ItemTouchHelper.DOWN), ItemTouchHelper.LEFT) {
+abstract class SwipeGesture(context: Context): ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
 
     private val deleteColor = ContextCompat.getColor(context, R.color.deleteColor)
     private val deleteIcon = R.drawable.ic_delete
+    private val checkedColor = ContextCompat.getColor(context, R.color.checkedColor)
+    private val checkedIcon = R.drawable.ic_check_circle
 
     override fun onMove(
         recyclerView: RecyclerView,

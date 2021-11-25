@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Annunciator</string>
+    <string name="crime_title_hint">Введите название</string>
+    <string name="crime_title_label">Название</string>
+    <string name="crime_details_label">Детали</string>
+    <string name="crime_solved_label">Решено</string>
+    <string name="new_crime">Новое преступление</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="delete_crime">Удалить</string>
+    <string name="add_crime">Добавить</string>
+    <string name="crime_report">%1$s! The TODO was discovered on %2$s. %3$s, and %4$s</string>
+    <string name="crime_report_solved">The case is solved</string>
+    <string name="crime_report_unsolved">The case is not solved</string>
+    <string name="crime_report_no_suspect">there is no executor.</string>
+    <string name="crime_report_suspect">the executor is %s.</string>
+    <string name="crime_report_subject">Annunciator Report</string>
+    <string name="send_report">Отчет</string>
+    <string name="choose_executor">Исполнитель</string>
+</resources>

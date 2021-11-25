@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/79527/AndroidStudioProjects/Annunciator/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.28055555555555556" />
+        <entry key="..\:/Users/79527/AndroidStudioProjects/Annunciator/app/src/main/res/drawable/ic_delete.xml" value="0.31979166666666664" />
         <entry key="..\:/Users/79527/AndroidStudioProjects/Annunciator/app/src/main/res/drawable/ic_done.xml" value="0.3148717948717949" />
         <entry key="..\:/Users/79527/AndroidStudioProjects/Annunciator/app/src/main/res/drawable/ic_handcuffs.xml" value="0.28055555555555556" />
         <entry key="..\:/Users/79527/AndroidStudioProjects/Annunciator/app/src/main/res/drawable/ic_list.xml" value="0.17916666666666667" />
@@ -11,7 +12,7 @@
         <entry key="..\:/Users/79527/AndroidStudioProjects/Annunciator/app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="..\:/Users/79527/AndroidStudioProjects/Annunciator/app/src/main/res/layout/crime_list_fragment.xml" value="0.30364583333333334" />
         <entry key="..\:/Users/79527/AndroidStudioProjects/Annunciator/app/src/main/res/layout/fragment_blank.xml" value="0.30364583333333334" />
-        <entry key="..\:/Users/79527/AndroidStudioProjects/Annunciator/app/src/main/res/layout/fragment_crime.xml" value="0.3333333333333333" />
+        <entry key="..\:/Users/79527/AndroidStudioProjects/Annunciator/app/src/main/res/layout/fragment_crime.xml" value="0.1" />
         <entry key="..\:/Users/79527/AndroidStudioProjects/Annunciator/app/src/main/res/layout/fragment_data_picker.xml" value="0.30364583333333334" />
         <entry key="..\:/Users/79527/AndroidStudioProjects/Annunciator/app/src/main/res/layout/list_item_crime.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/79527/AndroidStudioProjects/Annunciator/app/src/main/res/layout/list_item_crime_serious.xml" value="0.3333333333333333" />

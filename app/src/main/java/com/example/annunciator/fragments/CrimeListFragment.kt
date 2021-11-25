@@ -3,7 +3,9 @@ package com.example.annunciator.fragments
 import android.graphics.Color
 import android.graphics.Paint
 import android.os.Bundle
+import android.util.Log
 import android.view.*
+import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
@@ -22,10 +24,6 @@ class CrimeListFragment : Fragment() {
 
     private var _binding: CrimeListFragmentBinding? = null
     private val binding get() = _binding!!
-
-//    private val viewModel: CrimeListViewModel by lazy {
-//        ViewModelProvider(this).get(CrimeListViewModel::class.java)
-//    }
 
     private val viewModel: CrimeListViewModel by viewModels()
 
@@ -46,19 +44,6 @@ class CrimeListFragment : Fragment() {
         binding.crimeRecyclerView.adapter = adapter
 
         val swipeGesture = object : SwipeGesture(requireContext()) {
-
-            override fun onMove(
-                recyclerView: RecyclerView,
-                viewHolder: RecyclerView.ViewHolder,
-                target: RecyclerView.ViewHolder
-            ): Boolean {
-                val startPosition = viewHolder.adapterPosition
-                val endPosition = target.adapterPosition
-
-//                TODO ("Задать вопрос на StackOverFlow")
-
-                return true
-            }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
 
@@ -114,6 +99,8 @@ class CrimeListFragment : Fragment() {
         private val titleTextView: TextView = itemView.findViewById(R.id.crime_title)
         private val dateTextView: TextView = itemView.findViewById(R.id.crime_date)
         private val solvedImageView: ImageView = itemView.findViewById(R.id.isDoneMark)
+
+        private val isDoneChecked: CheckBox = itemView.findViewById(R.id.isDoneCheckBox)
 
         init {
             itemView.setOnClickListener(this)
