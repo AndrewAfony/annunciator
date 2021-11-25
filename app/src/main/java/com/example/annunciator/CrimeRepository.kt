@@ -39,9 +39,8 @@ class CrimeRepository private constructor(context: Context) {
     // Photos
     private val filesDir = context.applicationContext.filesDir
 
-    fun getPhotoFile(crime: Crime): File = File(filesDir, crime.photoFileName)
-
-
+    fun getPhotoFile(crime: Crime): File = File(filesDir, crime.photoFileName) // этот код не создает файлов в файловой системе
+                                                                               // возвращается объект File, указывающий в нужные места
     companion object {
         private var INSTANCE: CrimeRepository? = null
 

@@ -12,7 +12,11 @@
         tools:layout="@layout/crime_list_fragment" >
         <action
             android:id="@+id/openCertainCrime"
-            app:destination="@id/crimeFragment" />
+            app:destination="@id/crimeFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
     <fragment
         android:id="@+id/crimeFragment"
@@ -25,9 +29,6 @@
         <action
             android:id="@+id/action_crimeFragment_to_datePickerFragment"
             app:destination="@id/datePickerFragment" />
-        <action
-            android:id="@+id/action_returnToList"
-            app:destination="@id/crimeListFragment" />
     </fragment>
     <dialog
         android:id="@+id/datePickerFragment"

@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".fragments.CrimeFragment">
 
+
     <ImageView
         android:id="@+id/photo"
         android:layout_width="80dp"

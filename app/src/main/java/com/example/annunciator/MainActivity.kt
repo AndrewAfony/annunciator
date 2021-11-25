@@ -1,6 +1,8 @@
 package com.example.annunciator
 
+import android.app.Activity
 import android.os.Bundle
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.example.annunciator.databinding.ActivityMainBinding
 
@@ -12,8 +14,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-
 
     }
 }

@@ -1,25 +1,29 @@
 package com.example.annunciator.fragments
 
-import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.pm.ResolveInfo
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.provider.ContactsContract
 import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import com.example.annunciator.Crime
 import com.example.annunciator.R
 import com.example.annunciator.databinding.FragmentCrimeBinding
+import kotlinx.coroutines.launch
 import java.io.File
 import java.text.DateFormat
 import java.util.*
@@ -27,8 +31,6 @@ import java.util.*
 private const val TAG = "CrimeFragment"
 private const val DIALOG_DATE = "DialogDate"
 private const val REQUEST_DATE = "requestKey"
-private const val REQUEST_CONTACT = 1
-private const val REQUEST_PHOTO = 2
 
 class CrimeFragment : Fragment() {
 
@@ -42,6 +44,7 @@ class CrimeFragment : Fragment() {
     private val arguments : CrimeFragmentArgs by navArgs()
 
     private lateinit var pickContact: ActivityResultLauncher<Void>
+    private lateinit var takePicture: ActivityResultLauncher<Uri>
 
     private val viewModel: CrimeDetailViewModel by lazy {
         ViewModelProvider(this).get(CrimeDetailViewModel::class.java)
@@ -55,6 +58,7 @@ class CrimeFragment : Fragment() {
         val crimeID: UUID = UUID.fromString(arguments.crimeID)
         viewModel.loadCrime(crimeID)
 
+        // Contracts
         pickContact = registerForActivityResult(ActivityResultContracts.PickContact()) { contactUri ->
             val queryFields = arrayOf(ContactsContract.Contacts.DISPLAY_NAME)
             val cursor = contactUri?.let {
@@ -67,6 +71,14 @@ class CrimeFragment : Fragment() {
                     crime.suspect = suspect
                     viewModel.saveCrime(crime)
                     binding.buttonChooseSuspect.text = suspect
+                }
+            }
+        }
+
+        takePicture = registerForActivityResult(ActivityResultContracts.TakePicture()) { success : Boolean ->
+            if (success) {
+                if(photoFile.exists()) {
+                    updatePhoto()
                 }
             }
         }
@@ -160,18 +172,7 @@ class CrimeFragment : Fragment() {
             }
 
             setOnClickListener {
-                captureImage.putExtra(MediaStore.EXTRA_OUTPUT, photoUri)
-
-                val cameraActivities: List<ResolveInfo> = packageManager.queryIntentActivities(
-                    captureImage,
-                    PackageManager.MATCH_DEFAULT_ONLY
-                )
-
-                for (cameraActivity in cameraActivities) {
-                    requireActivity().grantUriPermission(cameraActivity.activityInfo.packageName, photoUri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
-                }
-
-                startActivityForResult(captureImage, REQUEST_PHOTO)
+                takePicture.launch(photoUri)
             }
         }
     }
@@ -197,6 +198,7 @@ class CrimeFragment : Fragment() {
         if(crime.suspect.isNotEmpty()) {
             binding.buttonChooseSuspect.text = crime.suspect
         }
+        updatePhoto()
     }
 
     private fun getCrimeReport(): String {
@@ -209,7 +211,7 @@ class CrimeFragment : Fragment() {
 
         val dateString = DateFormat.getDateInstance().format(crime.date).toString()
 
-        var suspect = if(crime.suspect.isBlank()) {
+        val suspect = if(crime.suspect.isBlank()) {
             getString(R.string.crime_report_no_suspect)
         }
         else {
@@ -217,5 +219,12 @@ class CrimeFragment : Fragment() {
         }
 
         return getString(R.string.crime_report, crime.title, dateString, solvedString, suspect)
+    }
+
+    private fun updatePhoto() {
+
+        val bitmap = BitmapFactory.decodeFile(photoFile.path)
+        binding.photo.setImageBitmap(bitmap)
+
     }
 }
